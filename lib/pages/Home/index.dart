@@ -4,6 +4,7 @@ import 'package:flutter_shop_app/components/Home/Hot.dart';
 import 'package:flutter_shop_app/components/Home/MoreList.dart';
 import 'package:flutter_shop_app/components/Home/Recommend.dart';
 import 'package:flutter_shop_app/components/Home/Slider.dart';
+import 'package:flutter_shop_app/viewmodels/home.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -13,10 +14,23 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final List<BannerItem> _bannerList = [
+    BannerItem(
+      id: "1",
+      imgUrl:
+          "https://piccdn3.umiwi.com/img/202603/29/202603291614225598209531.jpeg",
+    ),
+    BannerItem(
+      id: "2",
+      imgUrl:
+          "https://piccdn3.umiwi.com/img/202602/01/202602011437088764224110.jpeg",
+    ),
+  ];
+
   List<Widget> _getSliverList() {
     return [
       // slider
-      SliverToBoxAdapter(child: Slider()),
+      SliverToBoxAdapter(child: Slider(bannerList: _bannerList)),
       // gap
       SliverToBoxAdapter(child: SizedBox(height: 20)),
       // category
