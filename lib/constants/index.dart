@@ -8,4 +8,5 @@ class GlobalConstants {
 // 请求接口地址api常量
 class HttpConstants {
   static const String BANNER_LIST = "/home/banner"; // 轮播图接口
+  static const String CAREGORY_LIST = "/home/category/head"; // 分类接口
 }

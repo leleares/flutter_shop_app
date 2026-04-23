@@ -16,6 +16,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<BannerItem> _bannerList = [];
+  List<CategoryItem> _categoryList = [];
 
   List<Widget> _getSliverList() {
     return [
@@ -24,7 +25,7 @@ class _HomeViewState extends State<HomeView> {
       // gap
       SliverToBoxAdapter(child: SizedBox(height: 20)),
       // category
-      SliverToBoxAdapter(child: Category()),
+      SliverToBoxAdapter(child: Category(categoryList: _categoryList)),
       // gap
       SliverToBoxAdapter(child: SizedBox(height: 20)),
       // recommend
@@ -49,8 +50,13 @@ class _HomeViewState extends State<HomeView> {
     ];
   }
 
-  void _getBannerList() async {
+  Future<void> _getBannerList() async {
     _bannerList = await getBannerList();
+    setState(() {});
+  }
+
+  Future<void> _getCategoryList() async {
+    _categoryList = await getCategoryList();
     setState(() {});
   }
 
@@ -58,6 +64,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     _getBannerList();
+    _getCategoryList();
   }
 
   @override
