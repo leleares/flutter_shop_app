@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Slider;
+import 'package:flutter_shop_app/api/home.dart';
 import 'package:flutter_shop_app/components/Home/Category.dart';
 import 'package:flutter_shop_app/components/Home/Hot.dart';
 import 'package:flutter_shop_app/components/Home/MoreList.dart';
@@ -14,18 +15,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final List<BannerItem> _bannerList = [
-    BannerItem(
-      id: "1",
-      imgUrl:
-          "https://piccdn3.umiwi.com/img/202603/29/202603291614225598209531.jpeg",
-    ),
-    BannerItem(
-      id: "2",
-      imgUrl:
-          "https://piccdn3.umiwi.com/img/202602/01/202602011437088764224110.jpeg",
-    ),
-  ];
+  List<BannerItem> _bannerList = [];
 
   List<Widget> _getSliverList() {
     return [
@@ -57,6 +47,17 @@ class _HomeViewState extends State<HomeView> {
       // more list
       MoreList(),
     ];
+  }
+
+  void _getBannerList() async {
+    _bannerList = await getBannerList();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getBannerList();
   }
 
   @override
