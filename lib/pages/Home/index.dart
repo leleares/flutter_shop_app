@@ -17,6 +17,11 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   List<BannerItem> _bannerList = [];
   List<CategoryItem> _categoryList = [];
+  HotPreferenceResult _hotPreferenceResult = HotPreferenceResult(
+    id: '',
+    title: '',
+    subTypes: [],
+  );
 
   List<Widget> _getSliverList() {
     return [
@@ -29,7 +34,7 @@ class _HomeViewState extends State<HomeView> {
       // gap
       SliverToBoxAdapter(child: SizedBox(height: 20)),
       // recommend
-      SliverToBoxAdapter(child: Recommend()),
+      SliverToBoxAdapter(child: Recommend(hotPreference: _hotPreferenceResult)),
       // gap
       SliverToBoxAdapter(child: SizedBox(height: 20)),
       // hot
@@ -60,11 +65,17 @@ class _HomeViewState extends State<HomeView> {
     setState(() {});
   }
 
+  Future<void> _getHotPreferenceData() async {
+    _hotPreferenceResult = await getHotPreferenceData();
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     _getBannerList();
     _getCategoryList();
+    _getHotPreferenceData();
   }
 
   @override

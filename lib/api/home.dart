@@ -21,3 +21,13 @@ Future<List<CategoryItem>> getCategoryList() async {
 
   return categoryList;
 }
+
+// 获取特惠推荐数据
+Future<HotPreferenceResult> getHotPreferenceData() async {
+  Map<String, dynamic> result = await dioRequest.get(
+    HttpConstants.HOT_PREFERENCE,
+  );
+
+  HotPreferenceResult hotPreference = HotPreferenceResult.fromJSON(result);
+  return hotPreference;
+}

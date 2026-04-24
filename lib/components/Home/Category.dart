@@ -27,6 +27,7 @@ class _CategoryState extends State<Category> {
             height: 100,
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 238, 230, 231),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
