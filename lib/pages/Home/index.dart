@@ -17,9 +17,10 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final ScrollController _scrollController = ScrollController();
   // 分页相关
-  final int _page = 1;
+  int _page = 1;
+  final int _pageSize = 10;
   bool _isLoading = false;
-  final bool _hasMore = true;
+  bool _hasMore = true;
 
   List<BannerItem> _bannerList = [];
   List<CategoryItem> _categoryList = [];
@@ -102,14 +103,23 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Future<void> _getRecommendList() async {
-    if (!_isLoading || !_hasMore) {
-      print("正在加载或者没有下一页了");
+    if (_isLoading || !_hasMore) {
+      print("正在加载或者没有更多数据了");
       return;
     }
     _isLoading = true;
-    _recommendList = await getRecommendList({"limit": 20});
+    int requestLimit = _page * _pageSize;
+    _recommendList = await getRecommendList({
+      "limit": requestLimit,
+    }); // 注意这里是全量替换而不是数据拼接，很差劲的分页逻辑
     _isLoading = false;
     setState(() {});
+    if (_recommendList.length < requestLimit) {
+      _hasMore = false;
+      print("没有更多数据了");
+      return;
+    }
+    _page++;
   }
 
   void _registerEvent() {
@@ -119,7 +129,8 @@ class _HomeViewState extends State<HomeView> {
       // 如果滚动距离等于最大距离，则触底了加载下一页
       double curDistance = _scrollController.position.pixels;
       if (curDistance >= maxDistance - 50) {
-        print("到底啦");
+        print("加载下一页");
+        _getRecommendList();
       }
     });
   }
