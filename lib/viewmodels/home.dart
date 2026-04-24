@@ -124,3 +124,29 @@ class HotPreferenceGoodsItem {
     );
   }
 }
+
+class RecommendItem {
+  String id;
+  String name;
+  double price;
+  String picture;
+  int payCount;
+
+  RecommendItem({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.picture,
+    required this.payCount,
+  });
+
+  factory RecommendItem.fromJSON(Map<String, dynamic> json) {
+    return RecommendItem(
+      id: json["id"],
+      name: json["name"],
+      price: (json["price"] as num).toDouble(),
+      picture: json["picture"],
+      payCount: json["payCount"],
+    );
+  }
+}

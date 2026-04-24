@@ -32,6 +32,7 @@ class _HomeViewState extends State<HomeView> {
     title: '',
     subTypes: [],
   );
+  List<RecommendItem> _recommendList = [];
 
   List<Widget> _getSliverList() {
     return [
@@ -65,7 +66,7 @@ class _HomeViewState extends State<HomeView> {
       // gap
       SliverToBoxAdapter(child: SizedBox(height: 20)),
       // more list
-      MoreList(),
+      MoreList(recommendList: _recommendList),
     ];
   }
 
@@ -94,6 +95,11 @@ class _HomeViewState extends State<HomeView> {
     setState(() {});
   }
 
+  Future<void> _getRecommendList() async {
+    _recommendList = await getRecommendList({"limit": 20});
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -102,6 +108,7 @@ class _HomeViewState extends State<HomeView> {
     _getHotPreferenceData();
     _getInVogueData();
     _getOneStopData();
+    _getRecommendList();
   }
 
   @override

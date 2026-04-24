@@ -47,3 +47,14 @@ Future<HotPreferenceResult> getHotOnStopData() async {
   HotPreferenceResult hotOneStop = HotPreferenceResult.fromJSON(result);
   return hotOneStop;
 }
+
+// 获取一站买全数据
+Future<List<RecommendItem>> getRecommendList(
+  Map<String, dynamic> params,
+) async {
+  List list = await dioRequest.get(HttpConstants.HOT_RECOMMEND, params: params);
+
+  return list.map((recommend) {
+    return RecommendItem.fromJSON(recommend as Map<String, dynamic>);
+  }).toList();
+}
