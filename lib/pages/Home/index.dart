@@ -15,6 +15,12 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final ScrollController _scrollController = ScrollController();
+  // 分页相关
+  final int _page = 1;
+  bool _isLoading = false;
+  final bool _hasMore = true;
+
   List<BannerItem> _bannerList = [];
   List<CategoryItem> _categoryList = [];
   HotPreferenceResult _hotPreferenceResult = HotPreferenceResult(
@@ -96,13 +102,32 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Future<void> _getRecommendList() async {
+    if (!_isLoading || !_hasMore) {
+      print("正在加载或者没有下一页了");
+      return;
+    }
+    _isLoading = true;
     _recommendList = await getRecommendList({"limit": 20});
+    _isLoading = false;
     setState(() {});
+  }
+
+  void _registerEvent() {
+    _scrollController.addListener(() {
+      // 能滚动的最大距离
+      double maxDistance = _scrollController.position.maxScrollExtent;
+      // 如果滚动距离等于最大距离，则触底了加载下一页
+      double curDistance = _scrollController.position.pixels;
+      if (curDistance >= maxDistance - 50) {
+        print("到底啦");
+      }
+    });
   }
 
   @override
   void initState() {
     super.initState();
+    _registerEvent();
     _getBannerList();
     _getCategoryList();
     _getHotPreferenceData();
@@ -115,7 +140,10 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
-      child: CustomScrollView(slivers: _getSliverList()),
+      child: CustomScrollView(
+        slivers: _getSliverList(),
+        controller: _scrollController,
+      ),
     );
   }
 }
