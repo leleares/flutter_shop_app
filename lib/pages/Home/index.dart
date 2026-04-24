@@ -22,6 +22,16 @@ class _HomeViewState extends State<HomeView> {
     title: '',
     subTypes: [],
   );
+  HotPreferenceResult _hotInVogueResult = HotPreferenceResult(
+    id: '',
+    title: '',
+    subTypes: [],
+  );
+  HotPreferenceResult _hotOnStopResult = HotPreferenceResult(
+    id: '',
+    title: '',
+    subTypes: [],
+  );
 
   List<Widget> _getSliverList() {
     return [
@@ -43,8 +53,12 @@ class _HomeViewState extends State<HomeView> {
           direction: Axis.horizontal,
           spacing: 20,
           children: [
-            Expanded(child: Hot()),
-            Expanded(child: Hot()),
+            Expanded(
+              child: Hot(cardData: _hotInVogueResult, type: "hot"),
+            ),
+            Expanded(
+              child: Hot(cardData: _hotOnStopResult, type: "step"),
+            ),
           ],
         ),
       ),
@@ -70,12 +84,24 @@ class _HomeViewState extends State<HomeView> {
     setState(() {});
   }
 
+  Future<void> _getInVogueData() async {
+    _hotInVogueResult = await getHotInVogueData();
+    setState(() {});
+  }
+
+  Future<void> _getOneStopData() async {
+    _hotOnStopResult = await getHotOnStopData();
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     _getBannerList();
     _getCategoryList();
     _getHotPreferenceData();
+    _getInVogueData();
+    _getOneStopData();
   }
 
   @override

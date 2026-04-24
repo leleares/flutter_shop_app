@@ -31,3 +31,19 @@ Future<HotPreferenceResult> getHotPreferenceData() async {
   HotPreferenceResult hotPreference = HotPreferenceResult.fromJSON(result);
   return hotPreference;
 }
+
+// 获取爆款推荐数据
+Future<HotPreferenceResult> getHotInVogueData() async {
+  Map<String, dynamic> result = await dioRequest.get(HttpConstants.HOT_INVOGUE);
+
+  HotPreferenceResult hotInVogue = HotPreferenceResult.fromJSON(result);
+  return hotInVogue;
+}
+
+// 获取一站买全数据
+Future<HotPreferenceResult> getHotOnStopData() async {
+  Map<String, dynamic> result = await dioRequest.get(HttpConstants.HOT_ONESTOP);
+
+  HotPreferenceResult hotOneStop = HotPreferenceResult.fromJSON(result);
+  return hotOneStop;
+}

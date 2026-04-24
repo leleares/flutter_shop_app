@@ -10,4 +10,6 @@ class HttpConstants {
   static const String BANNER_LIST = "/home/banner"; // 轮播图接口
   static const String CAREGORY_LIST = "/home/category/head"; // 分类接口
   static const String HOT_PREFERENCE = "/hot/preference"; // 特惠推荐
+  static const String HOT_INVOGUE = "/hot/inVogue"; // 爆款推荐
+  static const String HOT_ONESTOP = "/hot/oneStop"; // 一站买全
 }
