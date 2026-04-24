@@ -17,7 +17,7 @@ class _MoreListState extends State<MoreList> {
         crossAxisCount: 2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 20,
-        childAspectRatio: 0.7,
+        childAspectRatio: 0.6,
       ),
       itemCount: widget.recommendList.length,
       itemBuilder: (BuildContext context, int index) {
