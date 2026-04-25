@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' hide Slider;
 import 'package:flutter_shop_app/api/home.dart';
 import 'package:flutter_shop_app/components/Home/Category.dart';
 import 'package:flutter_shop_app/components/Home/Hot.dart';
-import 'package:flutter_shop_app/components/Home/MoreList.dart';
+import 'package:flutter_shop_app/components/common/MoreList.dart';
 import 'package:flutter_shop_app/components/Home/Recommend.dart';
 import 'package:flutter_shop_app/components/Home/Slider.dart';
 import 'package:flutter_shop_app/utils/ToastUtil.dart';
