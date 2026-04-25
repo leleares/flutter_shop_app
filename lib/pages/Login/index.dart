@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop_app/api/user.dart';
+import 'package:flutter_shop_app/stores/UserController.dart';
 import 'package:flutter_shop_app/utils/ToastUtil.dart';
 import 'package:flutter_shop_app/viewmodels/user.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,6 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final UserController userController = Get.find<UserController>();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
@@ -37,10 +40,12 @@ class _LoginPageState extends State<LoginPage> {
         LoginRequest(account: account, password: password),
       );
 
-      print("res=> $res");
+      if (!mounted) return;
+      userController.updateUserInfo(res);
       Toastutil.showToast(context, "登录成功");
       Navigator.pop(context);
     } catch (e) {
+      if (!mounted) return;
       Toastutil.showToast(context, (e as DioException).message ?? "");
     }
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop_app/stores/UserController.dart';
+import 'package:get/get.dart';
 
 class Userinfo extends StatefulWidget {
   const Userinfo({super.key});
@@ -8,7 +10,12 @@ class Userinfo extends StatefulWidget {
 }
 
 class _UserinfoState extends State<Userinfo> {
+  final UserController userController = Get.find<UserController>();
+
   void _handleUserInfoClick() {
+    if (userController.user.value.token.isNotEmpty) {
+      return;
+    }
     Navigator.pushNamed(context, "/login");
   }
 
@@ -23,12 +30,31 @@ class _UserinfoState extends State<Userinfo> {
         onTap: _handleUserInfoClick,
         child: Row(
           children: [
-            Image.asset("lib/assets/goods_avatar.png", width: 50, height: 50),
-            SizedBox(width: 10),
-            Text(
-              "立即登录",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight(600)),
-            ),
+            Obx(() {
+              final avatar = userController.user.value.avatar;
+              if (avatar.isNotEmpty) {
+                return Image.network(avatar, width: 50, height: 50);
+              }
+              return Image.asset(
+                "lib/assets/goods_avatar.png",
+                width: 50,
+                height: 50,
+              );
+            }),
+            const SizedBox(width: 10),
+            Obx(() {
+              final user = userController.user.value;
+              final displayName = user.nickname.isNotEmpty
+                  ? user.nickname
+                  : (user.account.isNotEmpty ? user.account : "立即登录");
+              return Text(
+                displayName,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              );
+            }),
           ],
         ),
       ),
