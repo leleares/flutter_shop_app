@@ -10,6 +10,7 @@ class Toastutil {
         ),
         behavior: SnackBarBehavior.floating,
         content: Text(msg, textAlign: TextAlign.center),
+        duration: Duration(milliseconds: 1000),
       ),
     );
   }
