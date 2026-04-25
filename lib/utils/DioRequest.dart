@@ -20,12 +20,21 @@ class Diorequest {
             handler.next(response);
           } else {
             handler.reject(
-              DioException(requestOptions: response.requestOptions),
+              DioException(
+                requestOptions: response.requestOptions,
+                message: response.data["msg"],
+              ),
             );
           }
         },
         onError: (error, handler) {
-          handler.reject(error);
+          // handler.reject(error);
+          handler.reject(
+            DioException(
+              requestOptions: error.requestOptions,
+              message: error.response?.data["msg"] ?? "",
+            ),
+          );
         },
       ),
     );
@@ -35,16 +44,27 @@ class Diorequest {
     return _handleResponse(_dio.get(url, queryParameters: params));
   }
 
+  Future<dynamic> post(String url, {Map<String, dynamic>? data}) {
+    return _handleResponse(_dio.post(url, data: data));
+  }
+
   // 进一步处理返回结果，为了业务不再 resp.data，将 data 从中解构出来，并整合了业务状态码判断 resp 是否异常。
   Future<dynamic> _handleResponse(Future<Response<dynamic>> task) async {
-    Response<dynamic> taskResp = await task;
-    final Map<String, dynamic> taskData = taskResp.data as Map<String, dynamic>;
-    if (taskData["code"] == GlobalConstants.SUCCESS_CODE) {
-      // 证明后端响应没有问题
-      return taskData["result"];
-    } else {
-      // 异常，抛出异常
-      throw Exception(taskData["result"] ?? "数据请求异常");
+    try {
+      Response<dynamic> taskResp = await task;
+      final Map<String, dynamic> taskData =
+          taskResp.data as Map<String, dynamic>;
+      if (taskData["code"] == GlobalConstants.SUCCESS_CODE) {
+        // 证明后端响应没有问题
+        return taskData["result"];
+      }
+
+      throw DioException(
+        requestOptions: taskResp.requestOptions,
+        message: taskResp.data["msg"],
+      );
+    } catch (e) {
+      rethrow;
     }
   }
 }
