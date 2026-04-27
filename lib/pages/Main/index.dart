@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop_app/stores/UserController.dart';
+import 'package:get/get.dart';
+import 'package:flutter_shop_app/api/user.dart';
 import 'package:flutter_shop_app/pages/Cart/index.dart';
 import 'package:flutter_shop_app/pages/Category/index.dart';
 import 'package:flutter_shop_app/pages/Home/index.dart';
 import 'package:flutter_shop_app/pages/Mine/index.dart';
+import 'package:flutter_shop_app/stores/TokenManager.dart';
+import 'package:flutter_shop_app/viewmodels/user.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -53,6 +58,23 @@ class _MainPageState extends State<MainPage> {
 
   List<Widget> getTabBodyChildren() {
     return const [HomeView(), CategoryView(), CartView(), MineView()];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initUser();
+  }
+
+  final UserController _userController = Get.put(UserController());
+  void _initUser() async {
+    await tokenManager.init();
+    // 判断是否有token，有的话请求用户信息并存到Getx
+    String token = tokenManager.getToken();
+    if (token.isNotEmpty) {
+      UserInfo userInfo = await getUserInfoReq();
+      _userController.updateUserInfo(userInfo);
+    }
   }
 
   @override

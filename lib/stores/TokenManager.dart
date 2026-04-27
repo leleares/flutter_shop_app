@@ -8,7 +8,7 @@ class TokenManager {
 
   String _token = "";
 
-  void init() async {
+  Future<void> init() async {
     final prefs = await _getInstance();
     _token = prefs.getString(GlobalConstants.TOKEN_KEY) ?? "";
   }

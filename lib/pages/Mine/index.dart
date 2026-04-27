@@ -5,7 +5,6 @@ import 'package:flutter_shop_app/components/Mine/Order.dart';
 import 'package:flutter_shop_app/components/Mine/StickyGuessYouLike.dart';
 import 'package:flutter_shop_app/components/Mine/UserInfo.dart';
 import 'package:flutter_shop_app/components/common/MoreList.dart';
-import 'package:flutter_shop_app/stores/UserController.dart';
 import 'package:flutter_shop_app/viewmodels/home.dart';
 import 'package:get/get.dart';
 
@@ -93,9 +92,6 @@ class _MineViewState extends State<MineView> {
   @override
   void initState() {
     super.initState();
-    if (!Get.isRegistered<UserController>()) {
-      Get.put(UserController());
-    }
     _registerEvent();
     _getGuessYouLikeGoodsList();
   }

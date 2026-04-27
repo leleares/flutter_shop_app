@@ -16,4 +16,5 @@ class HttpConstants {
   static const String HOT_RECOMMEND = "/home/recommend"; // 推荐列表
   static const String GUESS_YOU_LIKE = "/home/goods/guessLike"; // 猜你喜欢
   static const String LOGIN = "/login"; // 登录请求
+  static const String USER_PROFILE = "/member/profile"; // 获取用户信息
 }

@@ -10,3 +10,11 @@ Future<UserInfo> loginRequest(LoginRequest data) async {
   UserInfo userInfo = UserInfo.fromJSON(result);
   return userInfo;
 }
+
+Future<UserInfo> getUserInfoReq() async {
+  Map<String, dynamic> result = await dioRequest.get(
+    HttpConstants.USER_PROFILE,
+  );
+  UserInfo userInfo = UserInfo.fromJSON(result);
+  return userInfo;
+}

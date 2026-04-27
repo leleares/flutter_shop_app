@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop_app/api/user.dart';
+import 'package:flutter_shop_app/stores/TokenManager.dart';
 import 'package:flutter_shop_app/stores/UserController.dart';
 import 'package:flutter_shop_app/utils/ToastUtil.dart';
 import 'package:flutter_shop_app/viewmodels/user.dart';
@@ -42,6 +43,8 @@ class _LoginPageState extends State<LoginPage> {
 
       if (!mounted) return;
       userController.updateUserInfo(res);
+      // token 持久化存储
+      tokenManager.setToken(res.token);
       Toastutil.showToast(context, "登录成功");
       Navigator.pop(context);
     } catch (e) {
