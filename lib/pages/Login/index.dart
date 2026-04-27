@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shop_app/api/user.dart';
 import 'package:flutter_shop_app/stores/TokenManager.dart';
 import 'package:flutter_shop_app/stores/UserController.dart';
+import 'package:flutter_shop_app/utils/LoadingDialog.dart';
 import 'package:flutter_shop_app/utils/ToastUtil.dart';
 import 'package:flutter_shop_app/viewmodels/user.dart';
 import 'package:get/get.dart';
@@ -37,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       String account = _phoneController.text;
       String password = _passwordController.text;
+      Loadingdialog.showLoading(context);
       final res = await loginRequest(
         LoginRequest(account: account, password: password),
       );
@@ -45,10 +47,12 @@ class _LoginPageState extends State<LoginPage> {
       userController.updateUserInfo(res);
       // token 持久化存储
       tokenManager.setToken(res.token);
+      Loadingdialog.hideLoading(context);
       Toastutil.showToast(context, "登录成功");
       Navigator.pop(context);
     } catch (e) {
       if (!mounted) return;
+      Loadingdialog.hideLoading(context);
       Toastutil.showToast(context, (e as DioException).message ?? "");
     }
   }

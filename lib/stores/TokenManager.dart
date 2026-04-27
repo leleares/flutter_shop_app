@@ -24,7 +24,7 @@ class TokenManager {
     return _token;
   }
 
-  void removeToken() async {
+  Future<void> removeToken() async {
     final prefs = await _getInstance();
     prefs.remove(GlobalConstants.TOKEN_KEY);
     _token = "";
