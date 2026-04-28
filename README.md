@@ -1,33 +1,101 @@
-# 基于 flutter 的购物 App
+# flutter_shop_app
 
-# 功能说明
-MainPage 为主页，包含四个底tab：首页、分类、购物车、我的   
-LoginPage 为登录页
+一个基于 Flutter 的移动端购物 App 练手项目，使用 GetX 做状态管理与路由，Dio 处理网络请求。
 
-# 账号密码
-账号:
-account:13200000001~13200000010
-密码:
-password:123456
+## 截图
 
-# Flutter 知识点
-## mounted
-- `mounted` 是 `State` 自带属性，用来判断当前组件是否还挂载在组件树上。
-- 异步操作结束后，如果还要调用 `setState()`、`Navigator`、`context`，最好先判断：`if (!mounted) return;`
-- 作用：避免页面已经销毁后继续操作 UI 导致报错。
+| 首页 | 商品列表 | 我的 | 登录 |
+|:---:|:---:|:---:|:---:|
+| ![home](./screenshots/home.jpeg) | ![list](./screenshots/list.jpeg) | ![mine](./screenshots/mine.jpeg) | ![login](./screenshots/login.jpeg) |
 
-## GetX: put 和 find
-- `Get.put()`：注册/创建实例，一般在全局状态第一次需要创建时调用。
-- `Get.find()`：获取已经注册过的实例，一般在子组件、其他页面里使用共享状态时调用。
-- 核心思想：共享状态只创建一次，多个地方取同一个实例，数据变化后由响应式组件自动刷新 UI。
-- 例如：`Get.put(UserController())` 不只是 `new` 了一个对象，还把它注册进了 GetX 容器。
-- 之后其他地方 `Get.find<UserController>()`，拿到的通常就是前面 `put` 进去的那一个实例。
-- 所以它的使用效果很像“单例”，但更准确地说，是“注册到 GetX 容器中的共享实例”。
-- `put` 负责放进去，`find` 负责取出来；`find` 本身不创建实例。
+## 功能
 
-## flutter create .
-- `flutter create .` 用于在当前目录补全或重新生成 Flutter 工程所需的基础文件。
-- 常见用途：把一个普通目录初始化成 Flutter 项目，或者在缺失 `android`、`ios` 等平台目录时重新生成它们。
+- **首页**：轮播图、商品分类入口、特惠推荐、爆款推荐、下拉刷新、上拉加载更多
+- **分类**：商品分类浏览
+- **购物车**：商品管理
+- **我的**：会员信息、订单入口（待付款/待发货/待收货/待评价）、收藏与足迹、猜你喜欢
+- **登录**：账号密码登录，本地持久化登录态
 
-## flutter build apk --debug
-打安卓测试包。
+## 技术栈
+
+| 类别 | 选型 |
+|------|------|
+| 框架 | Flutter (Dart `^3.11.4`) |
+| 状态管理 / 路由 | [GetX](https://pub.dev/packages/get) |
+| 网络请求 | [Dio](https://pub.dev/packages/dio) |
+| 本地存储 | [shared_preferences](https://pub.dev/packages/shared_preferences) |
+| 轮播组件 | [carousel_slider](https://pub.dev/packages/carousel_slider) |
+
+## 目录结构
+
+```
+lib/
+├── api/            # 接口定义
+├── assets/         # 图片等资源
+├── components/     # 公共组件
+├── constants/      # 常量
+├── pages/          # 页面
+│   ├── Home/
+│   ├── Category/
+│   ├── Cart/
+│   ├── Mine/
+│   ├── Main/       # 主页（底部 Tab 容器）
+│   └── Login/
+├── routes/         # 路由配置
+├── stores/         # GetX Controller / 全局状态
+├── utils/          # 工具函数
+├── viewmodels/     # 视图模型
+└── main.dart
+```
+
+## 快速开始
+
+### 环境要求
+
+- Flutter SDK `^3.11.4`
+- Dart `^3.11.4`
+- Android Studio / Xcode（按需）
+
+### 运行
+
+```bash
+# 克隆项目
+git clone https://github.com/leleares/flutter_shop_app.git
+cd flutter_shop_app
+
+# 安装依赖
+flutter pub get
+
+# 启动（指定设备）
+flutter run -d <device-id>
+```
+
+查看可用设备：
+
+```bash
+flutter devices
+```
+
+### 打包
+
+```bash
+# Android Debug 包
+flutter build apk --debug
+
+# Android Release 包
+flutter build apk --release
+```
+
+## 测试账号
+
+| 账号 | 密码 |
+|------|------|
+| `13200000001` ~ `13200000010` | `123456` |
+
+## 笔记
+
+开发过程中的 Flutter 知识点整理见 [note.md](./note.md)。
+
+## License
+
+MIT
