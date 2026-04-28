@@ -57,7 +57,7 @@ class _UserinfoState extends State<Userinfo> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomLeft,
-      height: 100,
+      height: 150,
       padding: EdgeInsets.only(left: 10, bottom: 10, right: 10),
       decoration: BoxDecoration(color: const Color.fromRGBO(251, 243, 235, 1)),
       child: GestureDetector(

@@ -82,11 +82,9 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       // SafeArea 可有效避开移动端安全区（顶部状态栏）
       // IndexedStack 中的 children 则为动态切换的对应四个 tab 的 body。
-      body: SafeArea(
-        child: IndexedStack(
-          index: _activeTabIndex, // 第几个 child 出现
-          children: getTabBodyChildren(), // child 列表
-        ),
+      body: IndexedStack(
+        index: _activeTabIndex, // 第几个 child 出现
+        children: getTabBodyChildren(), // child 列表
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: getBottomNavigationBarItems(),

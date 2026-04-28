@@ -48,7 +48,7 @@ class _SliderState extends State<Slider> {
           ),
         ),
         Positioned(
-          top: 10,
+          top: MediaQuery.of(context).padding.top,
           left: 0,
           right: 0,
           child: Padding(
