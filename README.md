@@ -29,3 +29,5 @@ password:123456
 - `flutter create .` 用于在当前目录补全或重新生成 Flutter 工程所需的基础文件。
 - 常见用途：把一个普通目录初始化成 Flutter 项目，或者在缺失 `android`、`ios` 等平台目录时重新生成它们。
 
+## flutter build apk --debug
+打安卓测试包。

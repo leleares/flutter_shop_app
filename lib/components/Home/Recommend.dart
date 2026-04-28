@@ -23,40 +23,47 @@ class _RecommendState extends State<Recommend> {
     return List.generate(displayItems.length, (index) {
       HotPreferenceGoodsItem item = displayItems[index];
       return Container(
-        child: Column(
-          children: [
-            // ClipRRect 裁剪组件，可设置圆角
-            ClipRRect(
-              borderRadius: BorderRadiusGeometry.all(Radius.circular(8)),
-              child: Image.network(
-                // 图片加载失败的 fallback，可在这里返回一个通用骨架图片
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    "lib/assets/home_cmd_sm.png",
-                    width: 100,
-                    height: 140,
-                    fit: BoxFit.cover,
-                  );
-                },
-                item.picture,
-                width: 100,
-                height: 140,
-                fit: BoxFit.cover,
+        child: Expanded(
+          child: Column(
+            children: [
+              // ClipRRect 裁剪组件，可设置圆角
+              ClipRRect(
+                borderRadius: BorderRadiusGeometry.all(Radius.circular(8)),
+                child: Image.network(
+                  // 图片加载失败的 fallback，可在这里返回一个通用骨架图片
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      "lib/assets/home_cmd_sm.png",
+                      width: 100,
+                      height: 140,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                  item.picture,
+                  width: 100,
+                  height: 140,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              padding: EdgeInsets.only(top: 5, right: 10, bottom: 5, left: 10),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.all(Radius.circular(40)),
+              SizedBox(height: 10),
+              Container(
+                padding: EdgeInsets.only(
+                  top: 5,
+                  right: 10,
+                  bottom: 5,
+                  left: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                ),
+                child: Text(
+                  "¥ ${item.price}",
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
               ),
-              child: Text(
-                "¥ ${item.price}",
-                style: TextStyle(color: Colors.white, fontSize: 12),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     });
@@ -100,11 +107,12 @@ class _RecommendState extends State<Recommend> {
           SizedBox(height: 10),
           Flex(
             direction: Axis.horizontal,
+            crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 20,
             children: [
               Expanded(
                 child: Container(
-                  width: 100,
+                  width: 300,
                   height: 140,
                   decoration: BoxDecoration(
                     image: DecorationImage(
