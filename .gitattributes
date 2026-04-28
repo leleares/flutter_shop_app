@@ -1,0 +1,11 @@
+# Auto-generated platform folders — exclude from GitHub language stats
+ios/*       linguist-vendored
+macos/*     linguist-vendored
+linux/*     linguist-vendored
+windows/*   linguist-vendored
+web/*       linguist-vendored
+android/*   linguist-vendored
+
+# Generated files
+*.g.dart    linguist-generated
+*.freezed.dart  linguist-generated
